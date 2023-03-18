@@ -34,23 +34,22 @@
 
   const favoriteBooks = [];
   function initActions(){
-    const click = document.querySelectorAll(select.itemBook.image);
-    for(let item of click){
-      item.addEventListener('dblclick', function(event){
-        event.preventDefault();
-        const bookID = item.getAttribute('data-id');
-        if (favoriteBooks.indexOf(bookID) == -1){
-          item.classList.add('favorite');
+    const booklist = document.querySelector(select.booksPanel.booksList);
+    booklist.addEventListener('dblclick', function(event){
+      if(event.target.offsetParent.classList.contains('book__image')){
+        const bookID = event.target.offsetParent.getAttribute('data-id');
+        if(favoriteBooks.indexOf(bookID) == -1){
+          event.target.offsetParent.classList.add('favorite');
           favoriteBooks.push(bookID);
         } else {
-          item.classList.remove('favorite');
+          event.target.offsetParent.classList.remove('favorite');
           const BookElement = favoriteBooks.indexOf(bookID);
           favoriteBooks.splice(BookElement, 1);
         }
-        console.log('Item: ', item);
+        console.log(event.target);
         console.log('Favorite: ', favoriteBooks);
-      });
-    }
+      }
+    });
   }
   render();
   initActions();
